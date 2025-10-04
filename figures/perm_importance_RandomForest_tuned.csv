@@ -1,52 +1,216 @@
 feature,importance_mean
-feat_3,0.14930060702032194
-feat_27,0.006835576669305832
-feat_0,0.003985220374769028
-feat_12,0.003694906307732859
-feat_4,0.002665610979150168
-feat_9,0.0024808656637635095
-feat_36,0.0023752969121139888
-feat_39,0.002322512536289234
-feat_41,0.0022697281604644793
-feat_23,0.0021905515967273305
-feat_17,0.002084982845077832
-feat_46,0.00205859065716546
-feat_42,0.002005806281340694
-feat_35,0.0019002375296911956
-feat_11,0.0018474531538664296
-feat_33,0.0016627078384798045
-feat_16,0.0015043547110055178
-feat_43,0.0015043547110055178
-feat_29,0.0015043547110055178
-feat_14,0.0014515703351807518
-feat_44,0.0014515703351807296
-feat_19,0.0013460015835312423
-feat_10,0.0013196093956188704
-feat_15,0.0012140406439693386
-feat_18,0.0011876484560569556
-feat_31,0.001134864080232212
-feat_47,0.0010820797044074348
-feat_13,0.0008709422011084378
-feat_8,0.0007653734494589059
-feat_24,0.0006861968857217904
-feat_5,0.0006861968857217793
-feat_45,0.0006598046978094074
-feat_32,0.0006598046978093852
-feat_25,0.0006334125098970244
-feat_22,0.0006334125098970244
-feat_37,0.0005014515703351541
-feat_38,0.00047505938242277114
-feat_20,0.0003430984428608785
-feat_28,0.0003167062549485067
-feat_7,0.00029031406703613485
-feat_2,0.0002375296912113689
-feat_26,0.00021113750329898595
-feat_1,0.00015835312747424223
-feat_6,0.00015835312747423114
-feat_21,0.00013196093956185928
-feat_49,2.6392187912349652e-05
-feat_40,0.0
-feat_34,-7.917656373715998e-05
-feat_50,-0.00010556875164955404
-feat_48,-0.00018474531538668071
-feat_30,-0.0010292953285827467
+value_eur,0.14930060702032194
+movement_reactions,0.006835576669305832
+age,0.003985220374769028
+defending,0.003694906307732859
+wage_eur,0.002665610979150168
+shooting,0.0024808656637635095
+mentality_positioning,0.0023752969121139888
+mentality_composure,0.002322512536289234
+defending_standing_tackle,0.0022697281604644793
+skill_ball_control,0.0021905515967273305
+attacking_short_passing,0.002084982845077832
+goalkeeping_positioning,0.00205859065716546
+defending_sliding_tackle,0.002005806281340694
+mentality_interceptions,0.0019002375296911956
+dribbling,0.0018474531538664296
+power_long_shots,0.0016627078384798045
+attacking_heading_accuracy,0.0015043547110055178
+power_shot_power,0.0015043547110055178
+goalkeeping_diving,0.0015043547110055178
+attacking_crossing,0.0014515703351807518
+goalkeeping_handling,0.0014515703351807296
+skill_dribbling,0.0013460015835312423
+passing,0.0013196093956188704
+attacking_finishing,0.0012140406439693386
+attacking_volleys,0.0011876484560569556
+power_stamina,0.001134864080232212
+goalkeeping_reflexes,0.0010820797044074348
+physic,0.0008709422011084378
+pace,0.0007653734494589059
+movement_acceleration,0.0006861968857217904
+international_reputation,0.0006861968857217793
+goalkeeping_kicking,0.0006598046978094074
+power_strength,0.0006598046978093852
+skill_long_passing,0.0006334125098970244
+movement_sprint_speed,0.0006334125098970244
+mentality_vision,0.0005014515703351541
+mentality_penalties,0.00047505938242277114
+work_rate=Medium/Medium,0.00039588281868563335
+skill_curve,0.0003430984428608785
+movement_balance,0.0003167062549485067
+skill_moves,0.00029031406703613485
+weight_kg,0.0002375296912113689
+movement_agility,0.00021113750329898595
+height_cm,0.00015835312747424223
+weak_foot,0.00015835312747423114
+skill_fk_accuracy,0.00013196093956185928
+work_rate=Medium/High,5.278437582472151e-05
+work_rate=High/Medium,2.6392187912371855e-05
+work_rate=Medium/Low,2.6392187912371855e-05
+nationality=Paraguay,2.6392187912371855e-05
+nationality=England,2.6392187912371855e-05
+nationality=United States,2.6392187912371855e-05
+nationality=Afghanistan,0.0
+work_rate=Low/Medium,0.0
+nationality=Albania,0.0
+nationality=Belarus,0.0
+nationality=Belgium,0.0
+nationality=Belize,0.0
+nationality=Benin,0.0
+nationality=Bermuda,0.0
+nationality=Algeria,0.0
+nationality=Andorra,0.0
+nationality=Angola,0.0
+nationality=Antigua & Barbuda,0.0
+nationality=Argentina,0.0
+nationality=Armenia,0.0
+nationality=Aruba,0.0
+nationality=Australia,0.0
+nationality=Austria,0.0
+nationality=Azerbaijan,0.0
+nationality=Barbados,0.0
+nationality=Canada,0.0
+nationality=Burkina Faso,0.0
+nationality=Burundi,0.0
+nationality=Cameroon,0.0
+nationality=Central African Republic,0.0
+nationality=Bolivia,0.0
+nationality=Bosnia Herzegovina,0.0
+nationality=Bulgaria,0.0
+nationality=Chad,0.0
+nationality=Cape Verde,0.0
+nationality=Congo,0.0
+nationality=Comoros,0.0
+nationality=Chile,0.0
+work_rate=Low/Low,0.0
+work_rate=Low/High,0.0
+work_rate=High/Low,0.0
+nationality=São Tomé & Príncipe,0.0
+nationality=Tanzania,0.0
+nationality=Mali,0.0
+nationality=Madagascar,0.0
+nationality=Mexico,0.0
+nationality=Moldova,0.0
+nationality=Chinese Taipei,0.0
+nationality=China PR,0.0
+nationality=Cuba,0.0
+nationality=Curacao,0.0
+nationality=Cyprus,0.0
+nationality=Czech Republic,0.0
+nationality=DR Congo,0.0
+nationality=Denmark,0.0
+nationality=Costa Rica,0.0
+nationality=Colombia,0.0
+nationality=Ecuador,0.0
+nationality=Egypt,0.0
+nationality=El Salvador,0.0
+nationality=Equatorial Guinea,0.0
+nationality=Eritrea,0.0
+nationality=Estonia,0.0
+nationality=Ethiopia,0.0
+nationality=Faroe Islands,0.0
+nationality=Finland,0.0
+nationality=Gabon,0.0
+nationality=Gambia,0.0
+nationality=Georgia,0.0
+nationality=Greece,0.0
+nationality=Ghana,0.0
+nationality=Dominican Republic,0.0
+nationality=Croatia,0.0
+nationality=Ivory Coast,0.0
+nationality=Jamaica,0.0
+nationality=Guinea,0.0
+nationality=Guinea Bissau,0.0
+nationality=Guyana,0.0
+nationality=Haiti,0.0
+nationality=Honduras,0.0
+nationality=Hong Kong,0.0
+nationality=Hungary,0.0
+nationality=Iceland,0.0
+nationality=India,0.0
+nationality=Indonesia,0.0
+nationality=Iran,0.0
+nationality=Iraq,0.0
+nationality=Israel,0.0
+nationality=Italy,0.0
+nationality=Latvia,0.0
+nationality=Lebanon,0.0
+nationality=Japan,0.0
+nationality=Jordan,0.0
+nationality=Kazakhstan,0.0
+nationality=Kenya,0.0
+nationality=Korea Republic,0.0
+nationality=Kosovo,0.0
+nationality=Liechtenstein,0.0
+nationality=Lithuania,0.0
+nationality=Liberia,0.0
+nationality=Libya,0.0
+nationality=Luxembourg,0.0
+nationality=Macau,0.0
+nationality=Guam,0.0
+nationality=Grenada,0.0
+nationality=Ukraine,0.0
+nationality=United Arab Emirates,0.0
+nationality=Scotland,0.0
+nationality=Saudi Arabia,0.0
+nationality=Serbia,0.0
+nationality=Sierra Leone,0.0
+nationality=Montenegro,0.0
+nationality=Malawi,0.0
+nationality=Morocco,0.0
+nationality=Mozambique,0.0
+nationality=Namibia,0.0
+nationality=Netherlands,0.0
+nationality=New Caledonia,0.0
+nationality=New Zealand,0.0
+nationality=Nicaragua,0.0
+nationality=Mauritania,0.0
+nationality=Niger,0.0
+nationality=Nigeria,0.0
+nationality=Northern Ireland,0.0
+nationality=North Macedonia,0.0
+nationality=Norway,0.0
+nationality=Palestine,0.0
+nationality=Panama,0.0
+nationality=Peru,0.0
+nationality=Philippines,0.0
+nationality=Portugal,0.0
+nationality=Puerto Rico,0.0
+nationality=Republic of Ireland,0.0
+nationality=Rwanda,0.0
+nationality=Russia,0.0
+nationality=Saint Kitts and Nevis,0.0
+nationality=Montserrat,0.0
+nationality=Venezuela,0.0
+nationality=Zambia,0.0
+nationality=Togo,0.0
+nationality=Thailand,0.0
+nationality=Tunisia,0.0
+nationality=Turkey,0.0
+nationality=Slovakia,0.0
+nationality=Senegal,0.0
+nationality=South Africa,0.0
+nationality=South Sudan,0.0
+nationality=Spain,0.0
+nationality=Sudan,0.0
+nationality=Sweden,0.0
+nationality=Switzerland,0.0
+nationality=Syria,0.0
+nationality=Slovenia,0.0
+nationality=Zimbabwe,0.0
+nationality=Uzbekistan,0.0
+nationality=Uruguay,0.0
+nationality=Trinidad & Tobago,0.0
+nationality=Uganda,0.0
+nationality=Poland,-2.6392187912382958e-05
+nationality=Romania,-2.6392187912382958e-05
+nationality=Germany,-2.6392187912382958e-05
+nationality=Wales,-2.6392187912382958e-05
+work_rate=High/High,-2.639218791239406e-05
+nationality=Brazil,-7.917656373714887e-05
+mentality_aggression,-7.917656373715998e-05
+nationality=France,-0.00010556875164953183
+preferred_foot=Left,-0.00018474531538668071
+preferred_foot=Right,-0.00018474531538668071
+power_jumping,-0.0010292953285827467

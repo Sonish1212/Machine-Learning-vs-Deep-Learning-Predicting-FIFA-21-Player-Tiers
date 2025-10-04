@@ -1,7 +1,6 @@
 # fifa21_ml_benchmark_plus.py
 # Decision Tree, Random Forest, GaussianNB, MLP (+SMOTE & tuned variants)
 # Deep Learning (Keras MLP)
-# Clean submission version: saves ONLY figures/CSVs (no model binaries)
 
 import os, warnings, random
 warnings.filterwarnings("ignore")
@@ -126,6 +125,8 @@ preprocessor_common = ColumnTransformer(
     ],
     remainder="drop"
 )
+preprocessor_common.set_output(transform="pandas")
+
 
 # For MLP: scale after OHE
 numeric_mlp = Pipeline(steps=[
@@ -146,6 +147,8 @@ preprocessor_mlp = ColumnTransformer(
     ],
     remainder="drop"
 )
+preprocessor_mlp.set_output(transform="pandas")
+
 
 # -------------------------------
 # 5) MODELS (baseline + advanced)
@@ -253,7 +256,7 @@ print(summary.to_string(index=False))
 summary.to_csv("figures/model_summary.csv", index=False)
 
 # -------------------------------
-# 7) 5-FOLD CV (optional, macro-F1)
+# 7) 5-FOLD CV (macro-F1)
 # -------------------------------
 def cv_macro_f1(pipe, X_df, y_ser, n_splits=5):
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=SEED)
@@ -274,7 +277,7 @@ for name, pipe in models.items():
     print(f"{name}: mean={scores.mean():.4f}  std={scores.std():.4f}  folds={np.round(scores,4)}")
 
 # ===============================
-# 7b) Deep Learning (Keras MLP++) — no model files saved
+# 7b) Deep Learning (Keras MLP++)
 # ===============================
 try:
     # Try TF keras first, fallback to standalone keras
@@ -412,75 +415,68 @@ except Exception as e:
     print("\n[DL] Skipping Keras model due to error:", e)
 
 # -------------------------------
-# 8) PERMUTATION FEATURE IMPORTANCE (RF best)
+# 8) PERMUTATION FEATURE IMPORTANCE (RF best) — use TRANSFORMED X
 # -------------------------------
 
-# Pick the top-performing RF-like model for interpretability:
+def pretty_feature_names(names):
+    out = []
+    for s in map(str, names):
+        s = s.replace("num__", "").replace("cat__", "").replace("onehot__", "")
+        s = s.replace("preferred_foot_", "preferred_foot=")
+        s = s.replace("work_rate_", "work_rate=")
+        s = s.replace("nationality_", "nationality=")
+        out.append(s)
+    return np.array(out)
+
 rf_like_preference = ["RandomForest_tuned", "RandomForest_SMOTE", "RandomForest", "DecisionTree"]
-chosen_name = None
-for candidate in rf_like_preference:
-    if candidate in [r["model"] for r in results]:
-        chosen_name = candidate
-        break
+chosen_name = next((m for m in rf_like_preference if m in [r["model"] for r in results]), None)
 
 if chosen_name is not None:
-    chosen_idx = [r["model"] for r in results].index(chosen_name)
-    chosen_pipe = results[chosen_idx]["pipeline"]
-    # Ensure fitted:
-    chosen_pipe.fit(X_train, y_train)
+    # get fitted pipeline
+    idx = [r["model"] for r in results].index(chosen_name)
+    pipe = results[idx]["pipeline"]
+    pipe.fit(X_train, y_train)
 
-    print(f"\n=== Permutation Importance on: {chosen_name} ===")
-    perm = permutation_importance(chosen_pipe, X_test, y_test,
-                                  n_repeats=10, random_state=SEED, n_jobs=-1)
+    # separate fitted preprocessor & classifier
+    prep = pipe.named_steps["prep"]
+    clf  = pipe.named_steps["clf"]
 
-    # ---- robust feature names ----
-    prep = chosen_pipe.named_steps["prep"]
+    # **transform X_test to the final feature space**
+    Xt_test = prep.transform(X_test)           # returns DataFrame 
+    feat_names = pretty_feature_names(np.asarray(Xt_test.columns))
 
-    def robust_feature_names(prep, n_out, numeric_features, categorical_features):
-        names = None
-        try:
-            names = prep.get_feature_names_out()
-        except Exception:
-            names = None
+    print(f"\n=== Permutation Importance on: {chosen_name} (transformed space) ===")
 
-        if names is None or len(names) != n_out:
-            try:
-                built = list(numeric_features)
-                ohe = None
-                for name, trans, cols in prep.transformers_:
-                    if name == "cat":
-                        if hasattr(trans, "named_steps"):
-                            ohe = trans.named_steps.get("onehot", None)
-                        else:
-                            ohe = trans
-                        break
-                if ohe is not None and hasattr(ohe, "get_feature_names_out"):
-                    built += list(ohe.get_feature_names_out(categorical_features))
-                else:
-                    n_cat = n_out - len(built)
-                    built += [f"cat_{i}" for i in range(n_cat)]
-                names = np.array(built)
-                if len(names) != n_out:
-                    names = np.array([f"feat_{i}" for i in range(n_out)])
-            except Exception:
-                names = np.array([f"feat_{i}" for i in range(n_out)])
-        return names
+    # run PI on the classifier with transformed features
+    from sklearn.inspection import permutation_importance
+    perm = permutation_importance(
+        clf, Xt_test, y_test, n_repeats=10, random_state=SEED, n_jobs=-1
+    )
 
-    n_out = perm.importances_mean.shape[0]
-    feat_names = robust_feature_names(prep, n_out, numeric_features, categorical_features)
-    # -----------------------------------------
+    n_import = perm.importances_mean.shape[0]
+    assert n_import == len(feat_names), f"mismatch: {n_import} vs {len(feat_names)}"
 
     imp_series = pd.Series(perm.importances_mean, index=feat_names).sort_values(ascending=False)
 
-    # Save CSV of all importances
-    imp_df = imp_series.reset_index()
-    imp_df.columns = ["feature", "importance_mean"]
-    imp_df.to_csv(f"figures/perm_importance_{chosen_name}.csv", index=False)
+    # save CSVs
+    all_csv = f"figures/perm_importance_{chosen_name}.csv"
+    top_csv = f"figures/perm_importance_{chosen_name}_TOP20.csv"
+    (imp_series
+        .reset_index()
+        .rename(columns={"index":"feature", 0:"importance_mean"})
+        .to_csv(all_csv, index=False))
+    (imp_series.head(20)
+        .reset_index()
+        .rename(columns={"index":"feature", 0:"importance_mean"})
+        .to_csv(top_csv, index=False))
 
-    # Plot top-30
-    topk = 30 if len(imp_series) >= 30 else len(imp_series)
-    fig, ax = plt.subplots(figsize=(7, 9))
-    imp_series.head(topk)[::-1].plot(kind="barh", ax=ax)
+    # plot top-k with trimmed labels
+    topk = min(30, len(imp_series))
+    trimmed = imp_series.head(topk).iloc[::-1]
+    trimmed.index = [s if len(s) <= 40 else s[:37] + "..." for s in trimmed.index]
+
+    fig, ax = plt.subplots(figsize=(7.5, 9))
+    trimmed.plot(kind="barh", ax=ax)
     ax.set_title(f"Permutation Importance (Top {topk}) — {chosen_name}")
     ax.set_xlabel("Importance (mean decrease in score)")
     plt.tight_layout()
@@ -488,5 +484,6 @@ if chosen_name is not None:
     plt.close(fig)
 else:
     print("\n(No RF-like model found for permutation importance.)")
+
 
 print("\nAll artifacts saved into ./figures")
